@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Para Shélcia Sumine, meu Mirtilo ✨🌸</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Cormorant Garamond, Lora & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Lora:ital,wght@0,400;0,500;1,400&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* Variáveis e estilos base para a atmosfera crepuscular e romântica */
+    :root {
+      --bg-midnight: #070b19;
+      --bg-twilight: #0f172a;
+      --gold-star: #fde68a;
+      --mirtilo-blue: #60a5fa;
+      --mirtilo-deep: #3b82f6;
+      --rose-petal: #f472b6;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background: radial-gradient(ellipse at top, #131e3a 0%, #090e1f 55%, #040711 100%);
+      color: #f1f5f9;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    .font-serif-poetic {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+    }
+
+    .font-lora-body {
+      font-family: 'Lora', Georgia, serif;
+    }
+
+    /* Barra de progresso de leitura discreta no topo */
+    #readingProgress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      width: 0%;
+      background: linear-gradient(90deg, #60a5fa 0%, #fde68a 55%, #f472b6 100%);
+      box-shadow: 0 0 12px rgba(253, 230, 138, 0.75);
+      z-index: 60;
+      transition: width 0.15s ease-out;
+    }
+
+    /* Canvas fixo no fundo para estrelas, estrelas cadentes e pétalas/flores */
+    #skyCanvas {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* Brilho pulsante da Estrela da Alva */
+    @keyframes morningStarPulse {
+      0%, 100% {
+        transform: scale(1) rotate(0deg);
+        filter: drop-shadow(0 0 14px rgba(253, 230, 138, 0.85)) drop-shadow(0 0 32px rgba(96, 165, 250, 0.45));
+      }
+      50% {
+        transform: scale(1.12) rotate(8deg);
+        filter: drop-shadow(0 0 24px rgba(253, 230, 138, 1)) drop-shadow(0 0 48px rgba(147, 197, 253, 0.75));
+      }
+    }
+
+    .morning-star-glow {
+      animation: morningStarPulse 4.5s ease-in-out infinite;
+    }
+
+    /* Flutuação suave das flores botânicas nas bordas */
+    @keyframes gentleSway {
+      0%, 100% {
+        transform: translateY(0px) rotate(0deg);
+      }
+      50% {
+        transform: translateY(-8px) rotate(3deg);
+      }
+    }
+
+    .botanical-sway {
+      animation: gentleSway 6s ease-in-out infinite;
+    }
+
+    .botanical-sway-delayed {
+      animation: gentleSway 7.2s ease-in-out 1.5s infinite;
+    }
+
+    /* Cartão estilo pergaminho noturno translúcido (Glassmorphism) */
+    .velvet-card {
+      background: linear-gradient(165deg, rgba(17, 25, 48, 0.78) 0%, rgba(10, 15, 32, 0.88) 100%);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(148, 163, 184, 0.18);
+      box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.75), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    }
+
+    /* Destaque para o cartão final do pedido */
+    .proposal-card {
+      background: linear-gradient(160deg, rgba(23, 37, 84, 0.72) 0%, rgba(15, 23, 42, 0.9) 55%, rgba(30, 27, 75, 0.78) 100%);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid rgba(253, 230, 138, 0.32);
+      box-shadow: 0 0 50px rgba(59, 130, 246, 0.18), 0 25px 60px -15px rgba(0, 0, 0, 0.8);
+    }
+
+    /* Animação escalonada de revelação dos parágrafos */
+    .reveal-item {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 0.95s cubic-bezier(0.22, 1, 0.36, 1), transform 0.95s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .reveal-item.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Botão principal com brilho cintilante */
+    .btn-starlight {
+      background: linear-gradient(135deg, #2563eb 0%, #3b82f6 50%, #6366f1 100%);
+      box-shadow: 0 10px 28px -5px rgba(59, 130, 246, 0.55), inset 0 1px 1px rgba(255, 255, 255, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    .btn-starlight:hover {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 14px 34px -4px rgba(96, 165, 250, 0.75), inset 0 1px 1px rgba(255, 255, 255, 0.4);
+    }
+
+    .btn-starlight:active {
+      transform: scale(0.98);
+    }
+
+    /* Corações e flores flutuantes gerados ao clicar na tela */
+    @keyframes floatUpFade {
+      0% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(0.6) rotate(0deg);
+      }
+      100% {
+        opacity: 0;
+        transform: translate(-50%, -140px) scale(1.35) rotate(22deg);
+      }
+    }
+
+    .click-bloom {
+      position: fixed;
+      pointer-events: none;
+      z-index: 50;
+      animation: floatUpFade 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+  </style>
+</head>
+<body class="antialiased selection:bg-blue-500/30 selection:text-amber-200">
+
+  <!-- Barra de progresso de leitura -->
+  <div id="readingProgress" aria-hidden="true"></div>
+
+  <!-- Canvas interativo do céu estrelado, estrelas cadentes e pétalas de mirtilo -->
+  <canvas id="skyCanvas"></canvas>
+
+  <!-- Decorações florais fixas nos cantos (Flores de Mirtilo & Flores Silvestres) -->
+  <div class="fixed top-0 left-0 w-36 h-36 sm:w-52 sm:h-52 pointer-events-none z-10 opacity-75 botanical-sway">
+    <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full">
+      <!-- Ramo delicado -->
+      <path d="M-10 10 C 45 30, 85 75, 125 135" stroke="#64748b" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
+      <path d="M35 35 C 65 20, 95 25, 115 40" stroke="#64748b" stroke-width="1.2" stroke-linecap="round" opacity="0.5"/>
+      <!-- Folhas -->
+      <path d="M55 48 C 72 32, 92 38, 86 55 C 78 62, 62 58, 55 48 Z" fill="#1e3a8a" fill-opacity="0.55" stroke="#93c5fd" stroke-width="0.8"/>
+      <path d="M88 85 C 108 72, 125 82, 116 98 C 106 105, 92 98, 88 85 Z" fill="#1e40af" fill-opacity="0.5" stroke="#93c5fd" stroke-width="0.8"/>
+      <!-- Flor de Mirtilo 1 -->
+      <g transform="translate(115, 42)">
+        <circle cx="0" cy="0" r="14" fill="#3b82f6" fill-opacity="0.25"/>
+        <path d="M0 -12 C 6 -6, 6 6, 0 12 C -6 6, -6 -6, 0 -12 Z" fill="#dbeafe" fill-opacity="0.85"/>
+        <path d="M-12 0 C -6 -6, 6 -6, 12 0 C 6 6, -6 6, -12 0 Z" fill="#bfdbfe" fill-opacity="0.85"/>
+        <circle cx="0" cy="0" r="3.5" fill="#fde68a"/>
+      </g>
+      <!-- Flor de Mirtilo 2 -->
+      <g transform="translate(128, 134) scale(0.85)">
+        <circle cx="0" cy="0" r="14" fill="#60a5fa" fill-opacity="0.25"/>
+        <path d="M0 -12 C 6 -6, 6 6, 0 12 C -6 6, -6 -6, 0 -12 Z" fill="#eff6ff" fill-opacity="0.9"/>
+        <path d="M-12 0 C -6 -6, 6 -6, 12 0 C 6 6, -6 6, -12 0 Z" fill="#93c5fd" fill-opacity="0.85"/>
+        <circle cx="0" cy="0" r="3.5" fill="#fde68a"/>
+      </g>
+    </svg>
+  </div>
+
+  <div class="fixed bottom-0 right-0 w-40 h-40 sm:w-56 sm:h-56 pointer-events-none z-10 opacity-75 botanical-sway-delayed">
+    <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full">
+      <path d="M210 190 C 155 170, 115 125, 75 65" stroke="#64748b" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
+      <path d="M165 165 C 135 180, 105 175, 85 160" stroke="#64748b" stroke-width="1.2" stroke-linecap="round" opacity="0.5"/>
+      <path d="M145 152 C 128 168, 108 162, 114 145 C 122 138, 138 142, 145 152 Z" fill="#1e3a8a" fill-opacity="0.55" stroke="#93c5fd" stroke-width="0.8"/>
+      <path d="M112 115 C 92 128, 75 118, 84 102 C 94 95, 108 102, 112 115 Z" fill="#1e40af" fill-opacity="0.5" stroke="#93c5fd" stroke-width="0.8"/>
+      <!-- Flor Silvestre & Mirtilo -->
+      <g transform="translate(82, 158)">
+        <circle cx="0" cy="0" r="15" fill="#f472b6" fill-opacity="0.2"/>
+        <path d="M0 -13 C 6 -6, 6 6, 0 13 C -6 6, -6 -6, 0 -13 Z" fill="#fce7f3" fill-opacity="0.85"/>
+        <path d="M-13 0 C -6 -6, 6 -6, 13 0 C 6 6, -6 6, -13 0 Z" fill="#fbcfe8" fill-opacity="0.85"/>
+        <circle cx="0" cy="0" r="3.5" fill="#fde68a"/>
+      </g>
+      <g transform="translate(72, 64) scale(0.9)">
+        <circle cx="0" cy="0" r="14" fill="#3b82f6" fill-opacity="0.25"/>
+        <path d="M0 -12 C 6 -6, 6 6, 0 12 C -6 6, -6 -6, 0 -12 Z" fill="#dbeafe" fill-opacity="0.9"/>
+        <path d="M-12 0 C -6 -6, 6 -6, 12 0 C 6 6, -6 6, -12 0 Z" fill="#93c5fd" fill-opacity="0.85"/>
+        <circle cx="0" cy="0" r="3.5" fill="#fde68a"/>
+      </g>
+    </svg>
+  </div>
+
+  <!-- Conteúdo Principal -->
+  <main class="relative z-20 max-w-2xl mx-auto px-4 sm:px-6 pt-10 pb-24">
+
+    <!-- 1. Abertura / Hero com a Estrela da Alva -->
+    <header id="heroSection" class="min-h-[82vh] flex flex-col items-center justify-center text-center py-8 transition-all duration-700">
+      <!-- Estrela da Alva brilhante -->
+      <div class="mb-6 relative flex items-center justify-center">
+        <div class="absolute w-28 h-28 rounded-full bg-amber-200/15 blur-2xl"></div>
+        <div class="absolute w-20 h-20 rounded-full bg-blue-400/20 blur-xl"></div>
+        <svg class="w-16 h-16 sm:w-20 sm:h-20 morning-star-glow" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M50 4 L58 38 L92 50 L58 62 L50 96 L42 62 L8 50 L42 38 Z" fill="url(#starGrad)" />
+          <path d="M50 22 L54 44 L76 50 L54 56 L50 78 L46 56 L24 50 L46 44 Z" fill="#ffffff" fill-opacity="0.9" />
+          <circle cx="50" cy="50" r="5" fill="#fef3c7" />
+          <defs>
+            <radialGradient id="starGrad" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(50 50) scale(46)">
+              <stop offset="0%" stop-color="#ffffff" />
+              <stop offset="45%" stop-color="#fde68a" />
+              <stop offset="100%" stop-color="#93c5fd" stop-opacity="0" />
+            </radialGradient>
+          </defs>
+        </svg>
+      </div>
+
+      <span class="uppercase tracking-[0.25em] text-xs sm:text-sm text-blue-300/90 font-medium mb-3">
+        Para além do oceano, sob o mesmo céu
+      </span>
+
+      <h1 class="font-serif-poetic text-4xl sm:text-5xl md:text-6xl font-semibold text-amber-100 leading-tight mb-6">
+        Shélcia Sumine,<br />
+        <span class="italic text-blue-300">meu Mirtilo</span>
+      </h1>
+
+      <!-- Citação inicial de Antoine de Saint-Exupéry -->
+      <blockquote class="velvet-card rounded-2xl p-6 sm:p-8 mb-8 max-w-xl mx-auto border border-amber-200/20">
+        <p class="font-serif-poetic italic text-xl sm:text-2xl text-amber-100/95 leading-relaxed mb-3">
+          “É preciso que eu suporte duas ou três larvas se quiser conhecer as borboletas.”
+        </p>
+        <footer class="text-xs sm:text-sm tracking-wider uppercase text-blue-300/80 font-medium">
+          Antoine de Saint-Exupéry, O Pequeno Príncipe
+        </footer>
+      </blockquote>
+
+      <!-- Botão para abrir a carta -->
+      <button id="openLetterBtn" type="button" class="btn-starlight text-white font-medium px-8 py-4 rounded-full text-base sm:text-lg flex items-center gap-3 cursor-pointer">
+        <span>Abrir carta escrita sob as estrelas</span>
+        <span class="text-amber-200">✦</span>
+      </button>
+
+      <p class="mt-4 text-xs text-slate-400">
+        Toca em qualquer parte do céu para fazer florescer estrelas e pétalas
+      </p>
+    </header>
+
+    <!-- 2. A Carta Poética -->
+    <section id="letterContainer" class="hidden space-y-8 mt-4">
+      <article class="velvet-card rounded-3xl p-6 sm:p-10 md:p-12 space-y-7 font-lora-body text-[1.06rem] sm:text-[1.18rem] leading-[1.95] text-slate-100/95">
+
+        <!-- Ornamento superior da carta -->
+        <div class="flex items-center justify-center gap-3 pb-2 opacity-80">
+          <span class="h-px w-12 bg-gradient-to-r from-transparent to-amber-200/50"></span>
+          <span class="text-amber-200 text-sm">✦ 🌸 ✦</span>
+          <span class="h-px w-12 bg-gradient-to-l from-transparent to-amber-200/50"></span>
+        </div>
+
+        <!-- Parágrafo 1 -->
+        <p class="reveal-item">
+          Sempre me cativou o teu modo de existir, Shélcia, Sumine, meu Mirtilo de fala incessante e provocação fácil. Sorria, fazia brincadeiras e provocações por eu me preocupar em expressar-me bem. Essa garota tinha uma personalidade única, talvez uma loucura, mas era uma loucura singular. Sem saber, partiu-me o coração quando foi atrás dos seus sonhos e viajou para além do oceano: eu vi o meu sonho indo atrás dos seus sonhos, enquanto o sentimento, teimoso, permanecia intacto.
+        </p>
+
+        <!-- Parágrafo 2 -->
+        <p class="reveal-item">
+          Há algo que sempre incomodou este coração: a covardia e o medo. Confesso que o amor que me encontrou, este sentimento que nasceu nessas conversas nas horas boémias, foi inesperado, bem distante do idealizado amor de Saramago e Pilar, e isso assustou-me. Talvez porque para ti tenha surgido apenas como um desejo, e para mim como uma admiração. Sinceramente, cheguei a pensar, <span class="italic text-amber-100">“e lá vamos nós para o jogo de uma garota entediada”</span>, mas confesso que o meu coração apenas pensava: ou será uma decepção já esperada, ou uma efêmera ilusão de paixão.
+        </p>
+
+        <!-- Parágrafo 3 -->
+        <p class="reveal-item">
+          Foi um medo que carreguei durante bastante tempo. As incertezas, obviamente, não sumiriam do dia para a noite; foram desaparecendo em cada piada contada, em cada sorriso perfeito que davas, em cada <span class="italic text-blue-200">“trava na beleza”</span>. Meu Deus, apaixonei-me por uma garota que dançava kuduro, e até nisso o encanto aconteceu. Confesso que houve momentos em que desejei odiar o sentimento que tinha por ti, vendo ali apenas uma prole infértil, uma forma de te relacionares que por vezes parecia difícil ou pouco acolhedora, perguntando-me dia após dia o que tanto buscavas em mim. Sabia que aquilo não era o amor pleno, mas no fundo era o maior grito de piedade e amor que já tive. Ainda me lembro da conversa que tivemos, da minha rápida desistência, e da tua falta de validação ou importância às minhas missivas de amor.
+        </p>
+
+        <!-- Citação no meio da carta: Rainer Maria Rilke -->
+        <blockquote class="reveal-item my-8 py-5 px-6 rounded-2xl bg-blue-950/45 border-l-4 border-amber-200/70 font-serif-poetic">
+          <p class="italic text-xl sm:text-2xl text-amber-100 leading-relaxed mb-2">
+            “Amar é também isto: aceitar que o outro continue sendo um mistério.”
+          </p>
+          <footer class="font-sans text-xs uppercase tracking-widest text-blue-300/85">
+            Rainer Maria Rilke
+          </footer>
+        </blockquote>
+
+        <!-- Parágrafo 4 -->
+        <p class="reveal-item">
+          Não sei se essa fase foi fértil ou infértil, mas sei que surgiu ainda outro grande medo: amar alguém à distância. E se acordares um dia e quiseres partir, depois de me deixares amar, ficarei eu a perguntar às sombras, <span class="italic text-amber-100">“porquê já não me ama mais?”</span>, e elas serão duras e sussurrarão, <span class="italic text-slate-300">“porque já não te ama”</span>. Temi também que a minha reserva estoica ou a minha amplitude de espírito te ferissem, ou que eu não soubesse recompor de longe um coração magoado, nem reencontrar-te no próximo ano, ou ver-te partir para outro abrigo por não quereres a solidão do outro lado do mar. E, contudo, basta-me evocar o teu abraço quando estiveste em Moçambique para sentir que, naquele instante, o tempo se estendeu numa pequena eternidade.
+        </p>
+
+        <!-- Parágrafo 5 -->
+        <p class="reveal-item">
+          Se pareci hesitante, não foi por falta de verdade no que sinto, mas pelo vértice diante de um porvir ainda envolto em breu. Hoje, porém, compreendo que justamente essa penumbra permite que o nosso amor desponte como estrela da alva a cada novo dia, convite para que eu continue a decifrar os contornos da tua existência e a maravilhar-me contigo.
+        </p>
+
+        <!-- Parágrafo 6 -->
+        <p class="reveal-item">
+          Amo-te um milhão de vezes a cada segundo, <strong class="font-semibold text-blue-300">Mirtilo</strong>. Perdoa a extensão destas linhas: diante de tanto sentir, só me resta dizer. Estou trémulo, quase um rapaz desarmado pela própria devoção, tomado por um misto de receio e vertigem, inteiramente apaixonado. Responde-me com o timbre do teu coração, meu amor, minha totó, meu sonho distante:
+        </p>
+
+      </article>
+
+      <!-- 3. O Pedido Final (Cartão Interativo Destacado) -->
+      <section id="proposalSection" class="reveal-item proposal-card rounded-3xl p-7 sm:p-10 md:p-12 text-center relative overflow-hidden">
+        <!-- Flores e Estrela da Alva decorativas no topo do pedido -->
+        <div class="flex items-center justify-center gap-3 mb-5">
+          <span class="text-2xl">🌸</span>
+          <svg class="w-10 h-10 morning-star-glow" viewBox="0 0 100 100" fill="none">
+            <path d="M50 5 L58 38 L95 50 L58 62 L50 95 L42 62 L5 50 L42 38 Z" fill="#fde68a" />
+          </svg>
+          <span class="text-2xl">🫐</span>
+        </div>
+
+        <h2 class="font-serif-poetic text-2xl sm:text-3xl text-amber-200 font-semibold mb-5">
+          O timbre do meu coração
+        </h2>
+
+        <p class="font-serif-poetic text-2xl sm:text-[1.65rem] leading-[1.75] text-white mb-8">
+          queres aventurar-te para além das muralhas do medo e viver esta aventura desconhecida chamada amor, comigo? Queres ser a minha namorada? Dás-me a honra de ser o namorado de uma garota linda e com problemas de interpretação?
+        </p>
+
+        <!-- Botões de resposta -->
+        <div id="actionButtons" class="flex flex-col sm:flex-row items-center justify-center gap-4 relative min-h-[110px] sm:min-h-[64px]">
+          <button id="yesBtn" type="button" class="btn-starlight w-full sm:w-auto text-white font-semibold px-8 py-4 rounded-2xl text-base sm:text-lg cursor-pointer z-10">
+            Sim, eu aceito viver essa aventura ❤️
+          </button>
+
+          <button id="playfulBtn" type="button" class="w-full sm:w-auto px-6 py-3.5 rounded-2xl text-sm sm:text-base font-medium text-blue-200 bg-slate-800/80 hover:bg-slate-700/80 border border-blue-400/25 transition-all duration-300 cursor-pointer">
+            Ainda estou a interpretar... 🤭
+          </button>
+        </div>
+
+        <!-- Mensagem divertida de incentivo quando ela toca no botão secundário -->
+        <p id="playfulHint" class="text-sm text-amber-200/90 italic mt-3 min-h-[20px] transition-opacity duration-300"></p>
+
+        <!-- Área de Celebração (Aparece ao aceitar) -->
+        <div id="celebrationBox" class="hidden mt-8 pt-8 border-t border-amber-200/25 space-y-6 animate-fadeIn">
+          <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-300/15 border border-amber-300/30 text-amber-200 text-sm font-medium">
+            <span>✨ Nossa Estrela da Alva nasceu ✨</span>
+          </div>
+
+          <h3 class="font-serif-poetic text-3xl sm:text-4xl text-amber-100 font-semibold">
+            Para sempre o teu namorado, meu Mirtilo! 💙🌸
+          </h3>
+
+          <p class="text-slate-200 text-sm sm:text-base max-w-lg mx-auto leading-relaxed">
+            Nem o oceano inteiro separa dois corações que decidiram caminhar juntos. Agora não há mais problemas de interpretação: é oficial!
+          </p>
+
+          <!-- Botão para copiar mensagem de confirmação para enviar no WhatsApp/Instagram -->
+          <div class="pt-2 flex flex-col items-center gap-3">
+            <button id="copyReplyBtn" type="button" class="px-6 py-3.5 rounded-full bg-amber-300 hover:bg-amber-200 text-slate-950 font-semibold text-sm sm:text-base shadow-lg shadow-amber-300/20 transition-all cursor-pointer flex items-center gap-2">
+              <span>Copiar resposta para enviar ao Shelton 💌</span>
+            </button>
+            <span id="copyFeedback" class="text-xs text-emerald-300 font-medium opacity-0 transition-opacity duration-300">
+              Mensagem copiada! Agora é só colar na nossa conversa 💙
+            </span>
+          </div>
+        </div>
+
+        <!-- Citação final e Assinatura sempre visíveis no encerramento -->
+        <div class="mt-10 pt-8 border-t border-slate-700/50 space-y-6">
+          <blockquote class="py-5 px-6 rounded-2xl bg-slate-900/60 border border-amber-200/20 max-w-xl mx-auto">
+            <p class="font-serif-poetic italic text-xl sm:text-2xl text-amber-100 leading-relaxed mb-2">
+              “Para que o amor seja possível, é preciso que dois seres se apoiem mutuamente, se saúdem e se protejam.”
+            </p>
+            <footer class="text-xs uppercase tracking-widest text-blue-300/85">
+              Rainer Maria Rilke, Cartas a um Jovem Poeta
+            </footer>
+          </blockquote>
+
+          <div class="pt-2 text-center">
+            <span class="block text-xs uppercase tracking-[0.25em] text-blue-300/70 mb-1">
+              Com todo o meu amor,
+            </span>
+            <p class="font-serif-poetic italic text-2xl sm:text-3xl text-amber-200 font-semibold tracking-wide">
+              Shelton Emílio Macuácua
+            </p>
+          </div>
+        </div>
+      </section>
+    </section>
+
+  </main>
+
+  <!-- Campo oculto para cópia compatível com iFrame/Mobile -->
+  <textarea id="hiddenCopyInput" class="sr-only" aria-hidden="true" readonly>Sim, Shelton! Eu aceito viver essa aventura desconhecida chamada amor contigo e ser a tua namorada ❤️✨ Assinado: o teu Mirtilo 🌸</textarea>
+
+  <script>
+    /**
+     * 1. ANIMAÇÃO DO CÉU NOTURNO, ESTRELAS CADENTES E PÉTALAS DE MIRTILO (CANVAS)
+     */
+    const canvas = document.getElementById('skyCanvas');
+    const ctx = canvas.getContext('2d');
+
+    let width = 0;
+    let height = 0;
+    let stars = [];
+    let petals = [];
+    let shootingStars = [];
+    let celebrationParticles = [];
+    let pointer = { x: -1000, y: -1000 };
+
+    function resizeCanvas() {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+      initSceneElements();
+    }
+
+    function initSceneElements() {
+      // Estrelas cintilantes proporcionais ao tamanho do ecrã
+      const starCount = Math.min(Math.floor((width * height) / 7500), 160);
+      stars = Array.from({ length: starCount }, () => ({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        radius: Math.random() * 1.7 + 0.4,
+        alpha: Math.random() * 0.8 + 0.2,
+        speed: Math.random() * 0.02 + 0.005,
+        phase: Math.random() * Math.PI * 2,
+        isGold: Math.random() > 0.78
+      }));
+
+      // Pétalas delicadas de flor de mirtilo (azul suave, branco perolado e rosa claro)
+      const petalCount = Math.min(Math.floor(width / 32), 26);
+      const colors = ['rgba(147, 197, 253, 0.45)', 'rgba(219, 234, 254, 0.4)', 'rgba(244, 114, 182, 0.32)', 'rgba(253, 230, 138, 0.35)'];
+      petals = Array.from({ length: petalCount }, () => ({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        size: Math.random() * 5 + 3.5,
+        speedY: Math.random() * 0.55 + 0.25,
+        speedX: Math.random() * 0.4 - 0.2,
+        angle: Math.random() * Math.PI * 2,
+        spin: (Math.random() - 0.5) * 0.02,
+        color: colors[Math.floor(Math.random() * colors.length)]
+      }));
+    }
+
+    function spawnShootingStar() {
+      if (shootingStars.length < 2 && Math.random() < 0.006) {
+        shootingStars.push({
+          x: Math.random() * width * 0.8,
+          y: Math.random() * height * 0.35,
+          len: Math.random() * 90 + 60,
+          speed: Math.random() * 8 + 7,
+          angle: Math.PI / 5 + (Math.random() * 0.15),
+          alpha: 1
+        });
+      }
+    }
+
+    function triggerCelebrationBurst() {
+      const originX = width / 2;
+      const originY = height * 0.55;
+      const palette = ['#fde68a', '#60a5fa', '#93c5fd', '#f472b6', '#ffffff'];
+
+      for (let i = 0; i < 85; i++) {
+        const angle = Math.random() * Math.PI * 2;
+        const velocity = Math.random() * 7 + 2.5;
+        celebrationParticles.push({
+          x: originX,
+          y: originY,
+          vx: Math.cos(angle) * velocity,
+          vy: Math.sin(angle) * velocity - 2.5,
+          size: Math.random() * 6 + 3,
+          color: palette[Math.floor(Math.random() * palette.length)],
+          alpha: 1,
+          gravity: 0.08,
+          shape: Math.random() > 0.45 ? 'flower' : 'star',
+          rotation: Math.random() * Math.PI * 2
+        });
+      }
+    }
+
+    function drawPetal(p) {
+      ctx.save();
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.angle);
+      ctx.fillStyle = p.color;
+      ctx.beginPath();
+      ctx.moveTo(0, -p.size);
+      ctx.bezierCurveTo(p.size, -p.size * 0.5, p.size, p.size * 0.5, 0, p.size);
+      ctx.bezierCurveTo(-p.size, p.size * 0.5, -p.size, -p.size * 0.5, 0, -p.size);
+      ctx.fill();
+      ctx.restore();
+    }
+
+    function drawMiniStar(x, y, r, color, alpha) {
+      ctx.save();
+      ctx.globalAlpha = alpha;
+      ctx.fillStyle = color;
+      ctx.beginPath();
+      for (let i = 0; i < 4; i++) {
+        const a = (i * Math.PI) / 2;
+        ctx.lineTo(x + Math.cos(a) * r, y + Math.sin(a) * r);
+        ctx.lineTo(x + Math.cos(a + Math.PI / 4) * (r * 0.35), y + Math.sin(a + Math.PI / 4) * (r * 0.35));
+      }
+      ctx.closePath();
+      ctx.fill();
+      ctx.restore();
+    }
+
+    function animateSky() {
+      ctx.clearRect(0, 0, width, height);
+
+      // Desenhar estrelas cintilantes
+      for (const s of stars) {
+        s.phase += s.speed;
+        const currentAlpha = 0.25 + ((Math.sin(s.phase) + 1) / 2) * 0.75;
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.radius, 0, Math.PI * 2);
+        ctx.fillStyle = s.isGold
+          ? `rgba(253, 230, 138, ${currentAlpha})`
+          : `rgba(226, 232, 240, ${currentAlpha})`;
+        ctx.fill();
+      }
+
+      // Estrelas cadentes ocasionais
+      spawnShootingStar();
+      for (let i = shootingStars.length - 1; i >= 0; i--) {
+        const ss = shootingStars[i];
+        const endX = ss.x - Math.cos(ss.angle) * ss.len;
+        const endY = ss.y - Math.sin(ss.angle) * ss.len;
+
+        const grad = ctx.createLinearGradient(ss.x, ss.y, endX, endY);
+        grad.addColorStop(0, `rgba(253, 230, 138, ${ss.alpha})`);
+        grad.addColorStop(1, 'rgba(253, 230, 138, 0)');
+
+        ctx.strokeStyle = grad;
+        ctx.lineWidth = 1.8;
+        ctx.beginPath();
+        ctx.moveTo(ss.x, ss.y);
+        ctx.lineTo(endX, endY);
+        ctx.stroke();
+
+        ss.x += Math.cos(ss.angle) * ss.speed;
+        ss.y += Math.sin(ss.angle) * ss.speed;
+        ss.alpha -= 0.016;
+
+        if (ss.alpha <= 0 || ss.x > width + 100 || ss.y > height + 100) {
+          shootingStars.splice(i, 1);
+        }
+      }
+
+      // Pétalas flutuantes com leve reação ao cursor/toque
+      for (const p of petals) {
+        const dx = p.x - pointer.x;
+        const dy = p.y - pointer.y;
+        const dist = Math.hypot(dx, dy);
+        if (dist < 110 && dist > 0) {
+          p.x += (dx / dist) * 1.4;
+          p.y += (dy / dist) * 1.4;
+        }
+
+        p.y += p.speedY;
+        p.x += p.speedX + Math.sin(p.y * 0.01) * 0.25;
+        p.angle += p.spin;
+
+        if (p.y > height + 15) {
+          p.y = -15;
+          p.x = Math.random() * width;
+        }
+        if (p.x > width + 15) p.x = -15;
+        if (p.x < -15) p.x = width + 15;
+
+        drawPetal(p);
+      }
+
+      // Partículas de celebração (quando aceita o pedido)
+      for (let i = celebrationParticles.length - 1; i >= 0; i--) {
+        const cp = celebrationParticles[i];
+        cp.x += cp.vx;
+        cp.y += cp.vy;
+        cp.vy += cp.gravity;
+        cp.alpha -= 0.011;
+        cp.rotation += 0.05;
+
+        if (cp.alpha <= 0) {
+          celebrationParticles.splice(i, 1);
+          continue;
+        }
+
+        if (cp.shape === 'star') {
+          drawMiniStar(cp.x, cp.y, cp.size * 1.5, cp.color, cp.alpha);
+        } else {
+          drawPetal({
+            x: cp.x,
+            y: cp.y,
+            size: cp.size,
+            angle: cp.rotation,
+            color: cp.color
+          });
+        }
+      }
+
+      requestAnimationFrame(animateSky);
+    }
+
+    window.addEventListener('resize', resizeCanvas);
+    window.addEventListener('mousemove', (e) => {
+      pointer.x = e.clientX;
+      pointer.y = e.clientY;
+    });
+    window.addEventListener('touchmove', (e) => {
+      if (e.touches[0]) {
+        pointer.x = e.touches[0].clientX;
+        pointer.y = e.touches[0].clientY;
+      }
+    }, { passive: true });
+
+    // Florescer uma pequena flor ou estrela onde tocar/clicar no fundo
+    document.addEventListener('click', (e) => {
+      if (e.target.closest('button')) return;
+      const symbols = ['🌸', '✨', '🫐', '💙', '⭐'];
+      const el = document.createElement('span');
+      el.className = 'click-bloom text-lg sm:text-xl select-none';
+      el.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+      el.style.left = `${e.clientX}px`;
+      el.style.top = `${e.clientY}px`;
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 1500);
+    });
+
+    /**
+     * 2. INTERATIVIDADE DA CARTA, SCROLL REVEAL E PEDIDO DE NAMORO
+     */
+    const openLetterBtn = document.getElementById('openLetterBtn');
+    const letterContainer = document.getElementById('letterContainer');
+    const yesBtn = document.getElementById('yesBtn');
+    const playfulBtn = document.getElementById('playfulBtn');
+    const playfulHint = document.getElementById('playfulHint');
+    const celebrationBox = document.getElementById('celebrationBox');
+    const actionButtons = document.getElementById('actionButtons');
+    const copyReplyBtn = document.getElementById('copyReplyBtn');
+    const copyFeedback = document.getElementById('copyFeedback');
+    const hiddenCopyInput = document.getElementById('hiddenCopyInput');
+    const readingProgress = document.getElementById('readingProgress');
+
+    // Atualizar barra de progresso de leitura no topo
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? Math.min((scrollTop / docHeight) * 100, 100) : 0;
+      readingProgress.style.width = `${progress}%`;
+    }, { passive: true });
+
+    // IntersectionObserver para revelação suave ao rolar a página
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    // Revelar carta com animação escalonada + observador de scroll
+    if (openLetterBtn && letterContainer) {
+      openLetterBtn.addEventListener('click', () => {
+        letterContainer.classList.remove('hidden');
+        openLetterBtn.innerHTML = '<span>Carta Aberta ✨</span>';
+        openLetterBtn.classList.add('opacity-80');
+
+        const items = document.querySelectorAll('.reveal-item');
+        items.forEach((item, index) => {
+          revealObserver.observe(item);
+          if (index < 2) {
+            setTimeout(() => {
+              item.classList.add('is-visible');
+            }, 180 + index * 220);
+          }
+        });
+
+        setTimeout(() => {
+          letterContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 220);
+      });
+    }
+
+    // Comportamento bem-humorado do botão secundário
+    const playfulMessages = [
+      'Tens certeza? Lê outra vez com carinho! 💙',
+      'O coração já disse sim, só falta o clique! ✨',
+      'Mirtilo, não foge da estrela da alva! 🌟',
+      'Desta vez não há problemas de interpretação: é amor mesmo! 🤭'
+    ];
+    let playfulClicks = 0;
+
+    playfulBtn.addEventListener('click', () => {
+      if (playfulClicks < playfulMessages.length) {
+        playfulHint.textContent = playfulMessages[playfulClicks];
+        const offsetX = (Math.random() - 0.5) * 32;
+        const offsetY = (Math.random() - 0.5) * 12;
+        playfulBtn.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
+        playfulClicks++;
+
+        if (playfulClicks === playfulMessages.length) {
+          setTimeout(() => {
+            playfulBtn.style.transform = 'translate(0, 0)';
+            playfulBtn.textContent = 'Interpretei tudo: eu aceito! ❤️🌸';
+            playfulBtn.className = 'btn-starlight w-full sm:w-auto text-white font-semibold px-7 py-3.5 rounded-2xl text-sm sm:text-base cursor-pointer';
+          }, 600);
+        }
+      } else {
+        acceptProposal();
+      }
+    });
+
+    function acceptProposal() {
+      actionButtons.classList.add('hidden');
+      playfulHint.classList.add('hidden');
+      celebrationBox.classList.remove('hidden');
+      triggerCelebrationBurst();
+      setTimeout(triggerCelebrationBurst, 650);
+      setTimeout(() => {
+        celebrationBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 250);
+    }
+
+    yesBtn.addEventListener('click', acceptProposal);
+
+    // Copiar resposta usando document.execCommand('copy')
+    copyReplyBtn.addEventListener('click', () => {
+      try {
+        hiddenCopyInput.classList.remove('sr-only');
+        hiddenCopyInput.select();
+        hiddenCopyInput.setSelectionRange(0, 99999);
+        document.execCommand('copy');
+        hiddenCopyInput.classList.add('sr-only');
+
+        copyFeedback.style.opacity = '1';
+        setTimeout(() => {
+          copyFeedback.style.opacity = '0';
+        }, 4000);
+      } catch (err) {
+        copyFeedback.textContent = 'Seleciona e envia: "Sim, Shelton! Eu aceito ser a tua namorada ❤️✨"';
+        copyFeedback.style.opacity = '1';
+      }
+    });
+
+    // Iniciar animação após carregamento completo da janela
+    window.onload = function () {
+      resizeCanvas();
+      animateSky();
+    };
+  </script>
+</body>
+</html>
